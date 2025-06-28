@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IMDB review classifier</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #eef2f3, #8e9eab);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            animation: fadeIn 1s ease;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            margin-top: 15px;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: none;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 20px;
+            font-size: 16px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            color: #222;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IMDB Review Classifier</h1>
+        <textarea id="review" placeholder="Type your review here..."></textarea>
+        <button onclick="analyze()">Classify Review</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function analyze() {
+            const text = document.getElementById("review").value;
+            const response = await fetch("http://127.0.0.1:5000/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text })
+            });
+
+            const result = await response.json();
+            if (result.error) {
+                document.getElementById("result").textContent = "Error: " + result.error;
+            } else {
+                document.getElementById("result").textContent =
+                    `Sentiment: ${result.sentiment} (confidence: ${result.confidence})`;
+            }
+        }
+    </script>
+</body>
+</html>
