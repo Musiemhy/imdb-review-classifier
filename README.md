@@ -1,6 +1,7 @@
 # Simple IMDB Review Classifier with Scikit-Learn
 
 This project demonstrates a simple machine learning pipeline using Scikit-learn for binary sentiment/review classification (positive vs negative reviews). It uses a small dataset of **5,000 reviews** — 2,500 positive and 2,500 negative. 
+
 It supports:
 - Command-line prediction
 - A Flask API
@@ -23,8 +24,20 @@ pip install -r requirements.txt
 ## 3 Train the Model
 ### Note: You can skip this step if you wish to use the already trained model
 
-Make sure there are IMDB dataset in `imdb_data/positive` and `imdb_data/negative` folders. and you can delete the models folder aswell.
+### 3.1 Dataset Preparation
+You can obtain the dataset from the following link:
+```bash
+https://ai.stanford.edu/~amaas/data/sentiment/ 
+```
+After downloading and extracting the dataset, please follow these steps:
+- Navigate to the train/neg folder and select 2500 files from the negative reviews.
+- Copy these 2500 files into your local negative folder.
+- Navigate to the train/pos folder and select 2500 files from the positive reviews.
+- Copy these 2500 files into your local positive folder.
 
+Note: You can use any number of samples as you like. The use of 2500 files per class here is just for simplicity and demonstration purposes.
+
+Then you can continue training the model with:
 ```bash
 python train.py
 ```
